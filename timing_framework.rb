@@ -1,16 +1,36 @@
-def create_numbers_array(max)
-  return *(1..max)
+class TimingFramework
+  MIN_ARRAY_SIZE = 5000
+  MAX_ARRAY_SIZE = 100000
+  INTERVAL = 5000
+  METHODS = [:last, :reverse, :shuffle, :sort]
+
+  def run
+    i = MIN_ARRAY_SIZE
+    while i <= MAX_ARRAY_SIZE do
+      array = create_numbers_array(i)
+      call_each_method(array)
+      i += INTERVAL
+    end
+  end
+
+  private
+
+  def create_numbers_array(max)
+    [*1..max].shuffle
+  end
+
+  def call_each_method(array)
+    METHODS.each do |method|
+      p '---'
+      p method
+      time_method { array.send(method) }
+    end
+  end
+
+  def time_method(&block)
+    t0 = Time.now
+    block.call
+    t1 = Time.now
+    p ((t1 - t0) * 1000.0).round(3)
+  end
 end
-
-arr = create_numbers_array(20000)
-proc = lambda { arr.shuffle }
-
-def timer(proc)
-  t0 = Time.now
-  proc.call
-  t1 = Time.now
-  interval = ((t1 - t0) * 1000.0).round(3)
-  p interval
-end
-
-timer(proc)
