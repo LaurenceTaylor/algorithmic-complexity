@@ -7,9 +7,7 @@ class TimingFramework
   def run
     i = MIN_ARRAY_SIZE
     while i <= MAX_ARRAY_SIZE do
-      p "arr.length = #{i}"
       call_each_method(create_numbers_array(i))
-      p '---'
       i += INTERVAL
     end
   end
@@ -22,8 +20,7 @@ class TimingFramework
 
   def call_each_method(array)
     METHODS.each do |method|
-      p method
-      p time_method { array.send(method) }
+      write_to_file(method, array.length, time_method { array.send(method) })
     end
   end
 
@@ -32,5 +29,11 @@ class TimingFramework
     block.call
     t1 = Time.now
     ((t1 - t0) * 1000.0).round(3)
+  end
+
+  def write_to_file(method, array_length, method_duration)
+    file = File.open("#{method}.txt", 'a')
+    file.puts("#{array_length}, #{method_duration}")
+    file.close
   end
 end
