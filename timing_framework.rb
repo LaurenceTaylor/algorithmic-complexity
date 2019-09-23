@@ -7,8 +7,9 @@ class TimingFramework
   def run
     i = MIN_ARRAY_SIZE
     while i <= MAX_ARRAY_SIZE do
-      array = create_numbers_array(i)
-      call_each_method(array)
+      p "arr.length = #{i}"
+      call_each_method(create_numbers_array(i))
+      p '---'
       i += INTERVAL
     end
   end
@@ -21,9 +22,8 @@ class TimingFramework
 
   def call_each_method(array)
     METHODS.each do |method|
-      p '---'
       p method
-      time_method { array.send(method) }
+      p time_method { array.send(method) }
     end
   end
 
@@ -31,6 +31,6 @@ class TimingFramework
     t0 = Time.now
     block.call
     t1 = Time.now
-    p ((t1 - t0) * 1000.0).round(3)
+    ((t1 - t0) * 1000.0).round(3)
   end
 end
