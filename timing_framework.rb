@@ -1,12 +1,10 @@
-require './file_handler'
-
 class TimingFramework
   MIN_ARRAY_SIZE = 5000
   MAX_ARRAY_SIZE = 100000
-  WARM_UP = 2
-  METHOD_REPEAT = 20
   INTERVAL = 5000
   METHODS = [:last, :reverse, :shuffle, :sort]
+  WARM_UP = 3
+  REPEAT = 20
 
   def run
     i = MIN_ARRAY_SIZE
@@ -26,8 +24,8 @@ class TimingFramework
     METHODS.each do |method|
       result = []
       WARM_UP.times { time_method { array.send(method) } }
-      METHOD_REPEAT.times { result << time_method { array.send(method) } }
-      write_to_file(method, array.length, result)
+      REPEAT.times { result << time_method { array.send(method) } }
+      save_to_file(method, array.length, result)
     end
   end
 
@@ -38,9 +36,9 @@ class TimingFramework
     ((t1 - t0) * 1000.0).round(3)
   end
 
-  def write_to_file(method, array_length, method_durations)
+  def save_to_file(method, length, durations)
     file = File.open("#{method}.txt", 'a')
-    file.puts("#{array_length}, #{method_durations.join(', ')}")
+    file.puts("#{length}, #{durations.join(', ')}")
     file.close
   end
 end
