@@ -3,8 +3,8 @@ class TimingFramework
   MAX_ARRAY_SIZE = 100000
   INTERVAL = 5000
   METHODS = [:last, :reverse, :shuffle, :sort]
-  WARM_UP = 3
-  REPEAT = 20
+  WARM_UP_ROUNDS = 10
+  REPEAT_METHOD_COUNT = 100
 
   def run
     i = MIN_ARRAY_SIZE
@@ -23,8 +23,8 @@ class TimingFramework
   def call_each_method(array)
     METHODS.each do |method|
       result = []
-      WARM_UP.times { time_method { array.send(method) } }
-      REPEAT.times { result << time_method { array.send(method) } }
+      WARM_UP_ROUNDS.times { time_method { array.send(method) } }
+      REPEAT_METHOD_COUNT.times { result << time_method { array.send(method) } }
       save_to_file(method, array.length, result)
     end
   end
