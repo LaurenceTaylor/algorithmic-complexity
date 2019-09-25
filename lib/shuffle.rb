@@ -1,5 +1,5 @@
 class Array
-  def shuffle
+  def new_shuffle
     initial_array = clone
     result = []
     while initial_array.any?
