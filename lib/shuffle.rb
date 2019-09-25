@@ -1,8 +1,8 @@
 class Array
   def shuffle
-    initial_array = self.clone
+    initial_array = clone
     result = []
-    while initial_array.any? do
+    while initial_array.any?
       i = rand(initial_array.length)
       result.prepend(initial_array[i])
       initial_array.delete_at(i)

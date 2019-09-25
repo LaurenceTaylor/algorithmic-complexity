@@ -7,15 +7,14 @@ describe Array do
     end
 
     it('should randomly rearrange an array of ints') do
-      input_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-      expected_output = [9, 8, 7, 6, 5, 4, 3, 2, 1]
-      expect(input_array.shuffle).to eq(expected_output)
+      expect([1, 2, 3, 4, 5].shuffle).to eq([5, 4, 3, 2, 1])
+      expect(['a', 'b', 'c', 'd', 'e'].shuffle).to eq(['e', 'd', 'c', 'b', 'a'])
+      expect([:a, :b, :c, :d, :e].shuffle).to eq([:e, :d, :c, :b, :a])
+      expect([1, 'b', :c, 4, 'e'].shuffle).to eq(['e', 4, :c, 'b', 1])
     end
 
-    it('should randomly rearrange an array of strings') do
-      input_array = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-      expected_output = ['9', '8', '7', '6', '5', '4', '3', '2', '1']
-      expect(input_array.shuffle).to eq(expected_output)
+    it('should work with empty arrays') do
+      expect([].shuffle).to eq([])
     end
   end
 end
