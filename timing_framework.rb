@@ -4,37 +4,41 @@ class TimingFramework
   MIN_ARRAY_SIZE = 5000
   MAX_ARRAY_SIZE = 100_000
   INTERVAL = 5000
-  METHODS = [:last, :reverse, :shuffle, :sort]
-  WARM_UP_ROUND_COUNT = 10
-  REPEAT_METHOD_COUNT = 100
+  DEFAULT_METHODS = [:last, :reverse, :shuffle, :sort]
+  WARM_UP = 10
+  REPEAT = 100
 
-  def initialize(file_writer = FileWriter.new)
+  def initialize(methods = DEFAULT_METHODS, file_writer = FileWriter.new)
+    @methods = methods
     @file_writer = file_writer
   end
 
   def run
     @current_array_size = MIN_ARRAY_SIZE
     while @current_array_size <= MAX_ARRAY_SIZE
-      randomised_array = create_randomised_array(@current_array_size)
-      time_each_method_on(randomised_array)
+      time_each_method(create_randomised_array(@current_array_size))
       @current_array_size += INTERVAL
     end
   end
 
   private
 
-  def create_randomised_array(max)
-    [*1..max].shuffle
+  def create_randomised_array(size)
+    [*1..size].shuffle
   end
 
-  def time_each_method_on(array)
-    METHODS.each do |method|
-      durations = []
-      WARM_UP_ROUND_COUNT.times { time_method { array.send(method) } }
-      REPEAT_METHOD_COUNT.times { durations << time_method { array.send(method) } }
-      entry = create_entry_string(durations)
+  def time_each_method(array)
+    @methods.each do |method|
+      entry = create_entry_string(time_method_repeater(method, array))
       save_to_file(method, entry)
     end
+  end
+
+  def time_method_repeater(method, array)
+    durations = []
+    WARM_UP.times { time_method { array.send(method) } }
+    REPEAT.times { durations << time_method { array.send(method) } }
+    durations
   end
 
   def time_method(&block)
@@ -42,12 +46,6 @@ class TimingFramework
     block.call
     t1 = Time.now
     ((t1 - t0) * 1000.0).round(3)
-  end
-
-  def save_to_file(method, durations)
-    file = File.open("#{method}.txt", 'a')
-    file.puts("#{@current_array_size}, #{durations.join(', ')}")
-    file.close
   end
 
   def create_entry_string(durations)
