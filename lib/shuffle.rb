@@ -2,11 +2,12 @@ class Array
   def new_shuffle
     initial_array = clone
     result = []
-    while initial_array.any?
+    until initial_array.empty?
       i = rand(initial_array.length)
-      result.prepend(initial_array[i])
-      initial_array.delete_at(i)
+      result << initial_array[i]
+      initial_array[i] = initial_array.last
+      initial_array.pop
     end
-    result
+    return result
   end
 end
