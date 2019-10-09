@@ -4,16 +4,18 @@ class TimingFramework
   MIN_INPUT_SIZE = 5000
   MAX_INPUT_SIZE = 100_000
   INPUT_SIZE_INTERVAL = 5000
-  DEFAULT_METHODS = [:last, :reverse, :shuffle, :sort]
+  DEFAULT_METHOD_LIST = [:last, :reverse, :shuffle, :sort]
+
+  # How many times should the method be repeated? This improves data quality.
   WARM_UP = 20
   REPEAT = 100
 
-  def initialize(method_list: DEFAULT_METHODS, file_writer: FileWriter.new)
-    @method_list = method_list
+  def initialize(file_writer: FileWriter.new)
     @file_writer = file_writer
   end
 
-  def run
+  def run(method_list: DEFAULT_METHOD_LIST)
+    @method_list = method_list
     @current_input_size = MIN_INPUT_SIZE
     while @current_input_size <= MAX_INPUT_SIZE
       randomised_array = create_randomised_array(@current_input_size)
@@ -31,8 +33,8 @@ class TimingFramework
   def run_methods_on(input)
     @method_list.each do |method|
       method_timings = produce_method_timings(method, input)
-      entry = create_entry_string(method_timings)
-      write_to_file(method, entry)
+      entry = compose_entry_string(method_timings)
+      save_data_to_file(method, entry)
     end
   end
 
@@ -50,11 +52,11 @@ class TimingFramework
     ((t1 - t0) * 1000.0).round(3)
   end
 
-  def create_entry_string(method_timings)
+  def compose_entry_string(method_timings)
     "#{@current_input_size}, #{method_timings.join(', ')}"
   end
 
-  def write_to_file(method, entry)
+  def save_data_to_file(method, entry)
     @file_writer.save(filename: method, entry: entry)
   end
 end
