@@ -31,10 +31,10 @@ irb -r ./timing_framework.rb
 
 ### Time Complexity
 
-![Time Complexity Graph](./images/time-complexity-graph.png)
-Image source: https://www.wikitechy.com/technology/a-time-complexity-question/
+![Time Complexity Graph](./images/time-complexity-graph.png)  
+_Image source: [https://www.wikitechy.com/technology/a-time-complexity-question/]_
 
----BEST PERFORMING---
+---**BEST PERFORMING**---
 
 #### Constant Time
 
@@ -56,4 +56,12 @@ Upward curve in run time with input size: y = x^2
 
 Similar to quadratic but more severe performance issues: y = 2^x. Symmetric of logarithmic graph.
 
----WORST PERFORMING---
+---**WORST PERFORMING**---
+
+### Results
+
+#### Last
+
+- Constant time - almost no time at all to complete. Elements of an array can be accessed in constant time as their address in memory is known.
+
+![Last Graph](./images/last-graph.png)
