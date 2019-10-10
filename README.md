@@ -72,7 +72,7 @@ Constant time: almost no time at all to complete. Elements of an array can be ac
 
 #### Shuffle
 
-Linear time for in-built version of method:
+Linear time for in-built version of shuffle method:
 
 ![Shuffle Graph](./images/shuffle-graph.png)
 
@@ -95,7 +95,7 @@ end
 
 The performance is quadratic time as looping the length of the array is linear time, and the `#delete_at` method within that loop is also linear time (it causes remapping). In other words it is linear time 'squared'.
 
-After observing this issue, I re-wrote the method again. Instead of using `#delete_at` within the loop, the last element of the array and the one to be removed are swapped. We can then `#pop` from the end of the array. These actions are all constant time, making the method linear time overall. The new code and performance graph are below:
+After observing this issue, I re-wrote the method again. Instead of using `#delete_at` within the loop, the last element of the array and the one to be removed are swapped. We can then `#pop` from the end of the array. These actions are all constant time, as the address in memory in each case is known and no remapping takes place. This makes the method linear time overall. The new code and performance graph are below:
 
 ```
 def new_shuffle
@@ -112,3 +112,5 @@ end
 ```
 
 ![Rewritten Shuffle Graph](./images/rewritten-shuffle-graph.png)
+
+Interesting to note: this rewritten version is still around 10x slower than the `#shuffle` method built-in to Ruby.
