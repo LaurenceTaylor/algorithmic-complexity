@@ -8,6 +8,6 @@ class Array
       initial_array[i] = initial_array.last
       initial_array.pop
     end
-    return result
+    result
   end
 end

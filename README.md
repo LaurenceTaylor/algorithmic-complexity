@@ -16,6 +16,8 @@ This is some code which times how long array methods take to run on inputs of va
 8. The `#run` method will produce .txt files in the root directory with timing data (in milliseconds) for each method.
    These files are ready to be imported into spreadsheet software. Currently, each method is called on inputs ranging between 5000-100000 (intervals of 5000). The methods are repeated on each input size 100 times to improve data quality.
 
+To run tests, quit irb and run `rspec` from the root directory.
+
 Code example:
 
 ```
@@ -50,7 +52,7 @@ Linear increase in run time with input size.
 
 #### Quadratic/ Cubic
 
-Upward curve in run time with input size: y = x^2
+Upward curve in run time with input size: y = x^2.
 
 #### Exponential
 
@@ -60,8 +62,53 @@ Similar to quadratic but more severe performance issues: y = 2^x. Symmetric of l
 
 ### Results
 
+The following graphs plot the median time for each input size, as this produced the smoothest graphs. This is a sample of the methods tested. The full data is in the /results folder.
+
 #### Last
 
-- Constant time - almost no time at all to complete. Elements of an array can be accessed in constant time as their address in memory is known.
+Constant time: almost no time at all to complete. Elements of an array can be accessed in constant time as their address in memory is known.
 
 ![Last Graph](./images/last-graph.png)
+
+#### Shuffle
+
+Linear time for in-built version of method:
+
+![Shuffle Graph](./images/shuffle-graph.png)
+
+On my first attempt at a re-write, the method had mediocre performance (quadratic time). The code used and performance graph are below:
+
+```
+def new_shuffle
+  initial_array = clone
+  result = []
+  until initial_array.empty?
+    i = rand(initial_array.length)
+    result << initial_array[i]
+    initial_array.delete_at(i)
+  end
+  result
+end
+```
+
+![Inefficient Shuffle Graph](./images/inefficient-shuffle-graph.png)
+
+The performance is quadratic time as looping the length of the array is linear time, and the `#delete_at` method within that loop is also linear time (it causes remapping). In other words it is linear time 'squared'.
+
+After observing this issue, I re-wrote the method again. Instead of using `#delete_at` within the loop, the last element of the array and the one to be removed are swapped. We can then `#pop` from the end of the array. These actions are all constant time, making the method linear time overall. The new code and performance graph are below:
+
+```
+def new_shuffle
+  initial_array = clone
+  result = []
+  until initial_array.empty?
+    i = rand(initial_array.length)
+    result << initial_array[i]
+    initial_array[i] = initial_array.last
+    initial_array.pop
+  end
+  result
+end
+```
+
+![Rewritten Shuffle Graph](./images/rewritten-shuffle-graph.png)
