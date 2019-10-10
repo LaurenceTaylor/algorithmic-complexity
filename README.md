@@ -46,15 +46,15 @@ Increase in input size causes no increase in run time.
 
 Run time eventually levels off with increasing input size.
 
-### Linear
+### Linear Time
 
 Linear increase in run time with input size.
 
-### Quadratic/ Cubic
+### Quadratic/ Cubic Time
 
 Upward curve in run time with input size: y = x^2.
 
-### Exponential
+### Exponential Time
 
 Similar to quadratic but more severe performance issues: y = 2^x. Symmetric of logarithmic graph.
 
@@ -114,3 +114,10 @@ end
 ![Rewritten Shuffle Graph](./images/rewritten-shuffle-graph.png)
 
 Interesting to note: this rewritten version is still around 10x slower than the `#shuffle` method built-in to Ruby.
+
+## Thoughts
+
+- Building timing_framework.rb was enjoyable. There may be opportunities to optimise it's performance!
+- There are some more methods I'd like to try testing: sorting an array of 1s and 0s, fibonacci sequence (a comparison of looping and recursive solutions might be interesting), name pairing, and sub-sequence summing.
+- A runner program which requires the relevant files and includes helper functions may be useful for users.
+- I believe there are Ruby gems which automatically produce graphs when given data. This would be more convenient than manually exporting results files.
