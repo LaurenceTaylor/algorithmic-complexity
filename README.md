@@ -4,7 +4,7 @@
 
 This is some code which times how long array methods take to run on inputs of varying sizes.
 
-### How to Use
+## How to Use
 
 1. Ensure you have [Ruby](https://www.ruby-lang.org/en/documentation/installation/) and [Bundler](https://bundler.io/) installed.
 2. Clone this repository.
@@ -31,46 +31,46 @@ irb -r ./timing_framework.rb
 => nil
 ```
 
-### Time Complexity
+## Time Complexity
 
 ![Time Complexity Graph](./images/time-complexity-graph.png)  
 _Image source: [https://www.wikitechy.com/technology/a-time-complexity-question/]_
 
 ---**BEST PERFORMING**---
 
-#### Constant Time
+### Constant Time
 
 Increase in input size causes no increase in run time.
 
-#### Logarithmic Time
+### Logarithmic Time
 
 Run time eventually levels off with increasing input size.
 
-#### Linear
+### Linear
 
 Linear increase in run time with input size.
 
-#### Quadratic/ Cubic
+### Quadratic/ Cubic
 
 Upward curve in run time with input size: y = x^2.
 
-#### Exponential
+### Exponential
 
 Similar to quadratic but more severe performance issues: y = 2^x. Symmetric of logarithmic graph.
 
 ---**WORST PERFORMING**---
 
-### Results
+## Results
 
 The following graphs plot the median time for each input size, as this produced the smoothest graphs. This is a sample of the methods tested. The full data is in the /results folder.
 
-#### Last
+### Last
 
 Constant time: almost no time at all to complete. Elements of an array can be accessed in constant time as their address in memory is known.
 
 ![Last Graph](./images/last-graph.png)
 
-#### Shuffle
+### Shuffle
 
 Linear time for in-built version of shuffle method:
 
